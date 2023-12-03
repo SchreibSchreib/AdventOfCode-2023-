@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace day1.input
+namespace day1
 {
     internal class Content
     {
