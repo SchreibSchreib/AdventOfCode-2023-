@@ -10,10 +10,6 @@ foreach (string line in input.Get)
     wonGames.Add(newGame.NumberOfPossibleGame);
 }
 
-foreach (int entry in wonGames)
-{
-    Console.WriteLine(entry);
-}
 Console.WriteLine(wonGames.Sum(x => x));
 
 Console.ReadLine();
