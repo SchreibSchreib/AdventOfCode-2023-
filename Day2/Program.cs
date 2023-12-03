@@ -1,5 +1,4 @@
-﻿using day2;
-using Day2;
+﻿using Day2;
 
 Content input = new Content();
 List<int> wonGames = new List<int>();

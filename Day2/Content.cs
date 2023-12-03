@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace day2
+namespace Day2
 {
     internal class Content
     {
