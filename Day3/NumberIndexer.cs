@@ -22,7 +22,7 @@ namespace Day3
 
         private Dictionary<int, int> GetIndizes(string line)
         {
-            var matches = Regex.Matches(line, @"\d+");
+            MatchCollection matches = Regex.Matches(line, @"\d+");
 
             Dictionary<int, int> result = matches
             .Cast<Match>()

@@ -13,7 +13,8 @@ for (int i = 0; i < input.Get.Length; i++)
     indicesAndValueOfNumbers.Add(indicesNumbers.Get.Item1, indicesNumbers.Get.Item2);
 }
 
-SearchMatrix searchMatrix = new SearchMatrix(indicesOfSymbols,indicesAndValueOfNumbers);
+//still buggy (indexes string and not chars)
+SearchMatrix searchMatrix = new SearchMatrix(indicesOfSymbols, indicesAndValueOfNumbers);
 int result = searchMatrix.GetAvailableNumbers.Sum(x => x);
 
 foreach (int i in searchMatrix.GetAvailableNumbers)
