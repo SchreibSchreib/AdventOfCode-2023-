@@ -10,7 +10,7 @@ loadStrings.Remove("seeds: ");
 foreach (KeyValuePair<string, string[]> entry in loadStrings)
 {
     Console.WriteLine($"Numbers found: {actualNumbers}");
-    Converter convertNumbers = new Converter(actualNumbers, entry.Value);
+    ConvertFromSourceToTarget convertNumbers = new ConvertFromSourceToTarget(actualNumbers, entry.Value);
     actualNumbers = convertNumbers.Get;
     Console.WriteLine($"Numbers converted to: {actualNumbers}");
     Console.WriteLine();

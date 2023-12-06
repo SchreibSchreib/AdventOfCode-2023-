@@ -7,28 +7,37 @@ using System.Threading.Tasks;
 
 namespace Day5
 {
-    internal class Converter
+    internal class ConvertFromSourceToTarget
     {
 
         public string Get { get; }
 
-        public Converter(string from, string[] convertNumbers)
+        public ConvertFromSourceToTarget(string source, string[] convertToNumbers)
         {
-            Get = ConvertFromTo(from, convertNumbers);
+            Get = ConvertFromTo(source, convertToNumbers);
         }
 
-        private string ConvertFromTo(string from, string[] convertNumbers)
+        private string ConvertFromTo(string source, string[] convertToNumbers)
         {
-            Dictionary<long, long> rangeOfInts = GetMatchingNumber(from, convertNumbers);
-            string result = GetNewString(from, rangeOfInts);
+            Dictionary<long, long> rangeOfInts = GetMatchingNumber(source, convertToNumbers);
+            string result = GetNewString(source, rangeOfInts);
             return result;
         }
 
-        private Dictionary<long, long> GetMatchingNumber(string from, string[] convertNumbers)
+        private Dictionary<long, long> GetMatchingNumber(string source, string[] convertToNumbers)
         {
-            long[] fromNumbers = from.Split(' ', StringSplitOptions.RemoveEmptyEntries).Select(x => long.Parse(x)).ToArray();
+            long[] fromNumbers = source.Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => long.Parse(x))
+                .ToArray();
+
+            return GetRange(convertToNumbers, fromNumbers);
+        }
+
+        private Dictionary<long, long> GetRange(string[] convertToNumbers, long[] fromNumbers)
+        {
             Dictionary<long, long> range = new Dictionary<long, long>();
-            foreach (string str in convertNumbers)
+
+            foreach (string str in convertToNumbers)
             {
                 long[] rangeNumbers = str.Split(' ').Select(x => long.Parse(x)).ToArray();
                 foreach (long numberFrom in fromNumbers)
