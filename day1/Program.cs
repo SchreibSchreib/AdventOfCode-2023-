@@ -5,11 +5,9 @@ List<int> convertedValues = new List<int>();
 
 foreach (string wordLine in line.Get)
 {
-    Converter convertLine = new Converter(
-        wordLine.FirstOrDefault(char.IsDigit) - '0',
-        wordLine.Reverse().FirstOrDefault(char.IsDigit) - '0');
+    Converter convertLine = new Converter(wordLine);
 
-    convertedValues.Add(convertLine.GetNumber);
+    convertedValues.Add(int.Parse(convertLine.GetNumber));
 }
 
 int result = convertedValues.Sum(x => x);
