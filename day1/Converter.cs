@@ -21,6 +21,7 @@ namespace Day1
             "eight",
             "nine"
          };
+        private int _numbersAddedToString;
 
         public string GetNumber { get; }
 
@@ -51,26 +52,40 @@ namespace Day1
         private string TransformLine(string inputLine)
         {
 
-            Dictionary<string, int[]> indexAndValueWord = new Dictionary<string, int[]>();
+            Dictionary<string, List<int>> indexAndValueWord = new Dictionary<string, List<int>>();
 
             foreach (string word in _numberWords)
             {
                 if (inputLine.Contains(word))
                 {
                     indexAndValueWord = GetIndexOfNumbewords(inputLine);
+                    break;
                 }
             }
 
-            foreach (KeyValuePair<string, int[]> indexToValue in indexAndValueWord)
+
+            while (HasValues(indexAndValueWord))
             {
-                foreach (int indexes in indexToValue.Value)
+                foreach (KeyValuePair<string, List<int>> indexToValue in indexAndValueWord)
                 {
-                    inputLine = inputLine.Insert(indexes, WordNumber(indexToValue.Key).ToString());
+                    if (indexToValue.Value.Count > 0)
+                    {
+                        for (int index = 0; index < indexToValue.Value.Count; index++)
+                        {
+                            inputLine = inputLine.Insert(indexToValue.Value[index] + _numbersAddedToString++
+                                , WordNumber(indexToValue.Key).ToString());
+                            indexAndValueWord[indexToValue.Key].RemoveAt(index);
+                            break;
+                        }
+                    }
                 }
             }
             return inputLine;
 
         }
+
+        private bool HasValues(Dictionary<string, List<int>> indexAndValueWord) => indexAndValueWord.Values
+            .Any(list => list.Any());
 
         private int WordNumber(string nameOfNumber)
         {
@@ -97,17 +112,22 @@ namespace Day1
             }
         }
 
-        private Dictionary<string, int[]> GetIndexOfNumbewords(string inputString)
+        private Dictionary<string, List<int>> GetIndexOfNumbewords(string inputString)
         {
 
 
-            return _numberWords
+            Dictionary<string, List<int>> result = _numberWords
             .ToDictionary(
                 word => word,
                 word => Enumerable.Range(0, inputString.Length - word.Length + 1)
                     .Where(i => inputString.Substring(i, word.Length).Equals(word))
-                    .ToArray()
-            );
+                    .ToList());
+
+            result = result
+                .OrderBy(kvp => kvp.Value.Any() ? kvp.Value.Min() : int.MaxValue)
+                .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            return result;
 
         }
     }
