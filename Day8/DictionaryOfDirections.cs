@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Day8
 {
-    internal class DictionaryDirections
+    internal class DictionaryOfDirections
     {
         public Dictionary<string, string> Get;
 
-        public DictionaryDirections(string[] input)
+        public DictionaryOfDirections(string[] input)
         {
             Get = CreateDictionary(input);
         }

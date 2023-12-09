@@ -2,7 +2,7 @@
 
 string[] input = new Content().Get;
 string leftOrRight = input[0];
-Dictionary<string, string> network = new DictionaryDirections(input).Get;
+Dictionary<string, string> network = new DictionaryOfDirections(input).Get;
 
 Iterator iterator = new Iterator(network, leftOrRight);
 
