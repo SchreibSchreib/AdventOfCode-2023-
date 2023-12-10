@@ -25,7 +25,7 @@ namespace Day10.Tiles
             return new Dictionary<string, char[]>
             {
                 {
-                    "right", GetRight()
+                    "up", GetUp()
                 },
                 {
                     "down", GetDown()

@@ -1,5 +1,4 @@
-﻿using Day10.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,21 +8,19 @@ using System.Threading.Tasks;
 
 namespace Day10.AbstractClasses
 {
-    internal abstract class Pipe : IMoveable
+    internal abstract class Pipe
     {
-        protected Dictionary<string, char[]> _possibleMoves;
-        protected int _movesToReachField;
-
+        public Dictionary<string, char[]> PossibleMoves { get; }
         public bool WasVisited;
         public int[] NumberOnField { get; }
 
         public Pipe(int[] numberOnField)
         {
-            _possibleMoves = GetPossibleMoves();
+            PossibleMoves = GetPossibleMoves();
             NumberOnField = numberOnField;
         }
 
-        public Dictionary<string, char[]> GetPossibleMoves()
+        private Dictionary<string, char[]> GetPossibleMoves()
         {
             Dictionary<string, char[]> directionToValidCounterParts = GetDirctionary();
             return directionToValidCounterParts;
@@ -38,29 +35,5 @@ namespace Day10.AbstractClasses
         protected char[] GetLeft() => new char[] { 'L', 'F', '-' };
 
         protected abstract Dictionary<string, char[]> GetDirctionary();
-
-        public int[] Move()
-        {
-            foreach (KeyValuePair<string, char[]> move in _possibleMoves)
-            {
-                if (move.Key == "up")
-                {
-                    return new int[] { NumberOnField[0] + 1, NumberOnField[1] };
-                }
-                if (move.Key == "right")
-                {
-                    return new int[] { NumberOnField[0], NumberOnField[1] + 1 };
-                }
-                if (move.Key == "down")
-                {
-                    return new int[] { NumberOnField[0] - 1, NumberOnField[1] };
-                }
-                if (move.Key == "left")
-                {
-                    return new int[] { NumberOnField[0], NumberOnField[1] - 1 };
-                }
-            }
-            return NumberOnField;
-        }
     }
 }

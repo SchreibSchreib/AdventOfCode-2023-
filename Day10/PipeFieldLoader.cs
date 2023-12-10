@@ -38,9 +38,9 @@ namespace Day10
             switch(v)
             {
                 case '|':
-                    return new HorizontalPipe(indexOnField);
-                case '-':
                     return new VerticalPipe(indexOnField);
+                case '-':
+                    return new HorizontalPipe(indexOnField);
                 case 'L':
                     return new NintyDegreeNorthEastPipe(indexOnField);
                 case 'J':

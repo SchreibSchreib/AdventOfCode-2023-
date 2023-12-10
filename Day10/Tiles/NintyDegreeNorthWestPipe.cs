@@ -21,7 +21,7 @@ namespace Day10.Tiles
                     "up", GetUp()
                 },
                 {
-                    "down", GetLeft()
+                    "left", GetLeft()
                 }
             };
         }
