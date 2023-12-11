@@ -1,6 +1,8 @@
 ﻿internal class GalaxyExpander
 {
     public string[] Get { get; }
+    public List<int> indexExpansionsX { get; private set; } = new List<int>();
+    public List<int> indexExpansionsY { get; private set; } = new List<int>();
 
     public GalaxyExpander(string[] input)
     {
@@ -19,14 +21,26 @@
     private List<string> ExpandYCoordinates(List<string> inputAsList)
     {
         List<string> result = new List<string>();
-        foreach (string inputLine in inputAsList)
+        List<int> positionForExpansion = new List<int>();
+        int insertionCount = 0;
+        for (int yIndex = 0; yIndex < inputAsList.Count; yIndex++)
         {
-            result.Add(inputLine);
-            if (!inputLine.Contains("#"))
+            result.Add(inputAsList[yIndex]);
+            if (!inputAsList[yIndex].Contains("#"))
             {
-                result.Add(inputLine);
+                indexExpansionsY.Add(yIndex + insertionCount++);
+                result.Add(inputAsList[yIndex]);
             }
         }
+        //List<string> result = new List<string>();
+        //foreach (string inputLine in inputAsList)
+        //{
+        //    result.Add(inputLine);
+        //    if (!inputLine.Contains("#"))
+        //    {
+        //        result.Add(inputLine);
+        //    }
+        //}
         return result;
     }
 
@@ -51,7 +65,7 @@
             {
                 result[yIndex] = (result[yIndex].Insert(xIndex + insertionCount, "."));
             }
-            insertionCount++;
+            indexExpansionsX.Add(xIndex + insertionCount++);
         }
         return result;
     }

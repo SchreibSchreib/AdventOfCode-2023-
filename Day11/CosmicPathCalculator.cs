@@ -2,7 +2,7 @@
 {
     private Dictionary<int, int[]> _cosmicCoordinates;
 
-    public int Result { get; }
+    public long Result { get; }
 
     public CosmicPathCalculator(Dictionary<int, int[]> cosmicCoordinates)
     {
@@ -10,10 +10,16 @@
         Result = Calculate();
     }
 
-    private int Calculate()
+    private long Calculate()
     {
         List<int> singlePaths = GetNumberOfPaths();
-        return singlePaths.Sum(x => x);
+        long result = 0;
+
+        foreach (int path in singlePaths)
+        {
+            result += path;
+        }
+        return result;
     }
 
     private List<int> GetNumberOfPaths()
