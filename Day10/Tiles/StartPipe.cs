@@ -9,8 +9,6 @@ namespace Day10.Tiles
 {
     internal class StartPipe : Pipe
     {
-        private List<Pipe>? _gameField;
-
         public StartPipe(int[] numberOnField) : base(numberOnField)
         {
         }
