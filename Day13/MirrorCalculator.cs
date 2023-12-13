@@ -1,6 +1,7 @@
 ﻿using Day13;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 internal class MirrorCalculator
 {
@@ -91,33 +92,74 @@ internal class MirrorCalculator
 
     private int GetVerticalResult(int indexOfMirror) => indexOfMirror + 1;
 
-    private int GetHorizontalResult() => (FindMirrorLineIndex() + 1) * 100;
+    private int GetHorizontalResult() => FindMirrorLineIndex() * 100;
 
     private int FindMirrorLineIndex()
     {
-        int columns = _inputBlock.Length;
+        int columnAdded = 0;
+        bool isTrueMirror = false;
+        List<string> lines = new List<string>();
 
-        for (int indexRow = 0; indexRow < columns; indexRow++)
+        foreach (string column in _inputBlock)
         {
-            if (IsMirrorLine(_inputBlock, indexRow, columns))
+            if (lines.Count - 1 < 0)
             {
-                return indexRow;
+                columnAdded++;
+                lines.Add(column);
+                continue;
             }
+            if (lines.Count == _inputBlock.Length)
+            {
+                continue;
+            }
+            if (lines[lines.Count - 1] == column)
+            {
+                if (CheckMirror(lines.Count, _inputBlock))
+                {
+                    return columnAdded;
+                }
+            }
+            columnAdded++;
+            lines.Add(column);
         }
-        return -1;
+        return 0;
     }
 
-    private bool IsMirrorLine(string[] pattern, int columnIndex, int columns)
+    private bool CheckMirror(int count, string[] inputBlock)
     {
-        int rows = pattern.Length;
+        List<string> lines = new List<string>();
+        List<string> secondLines = new List<string>();
+        List<string> mirroredLines = new List<string>();
 
-        for (int row = 0; row < rows; row++)
+        for (int indexList = 0; indexList < count; indexList++)
         {
-            if (pattern[row][columnIndex] != pattern[row][columns - 1 - columnIndex])
+            lines.Add(inputBlock[indexList]);
+        }
+        for (int indexList = count; indexList < count + indexList; indexList++)
+        {
+            if (indexList != inputBlock.Length)
             {
-                return false;
+                secondLines.Add(inputBlock[indexList]);
+            }
+            else
+            {
+                break;
             }
         }
-        return true;
+        foreach (string line in secondLines)
+        {
+            mirroredLines.Insert(0, line);
+        }
+
+        if (mirroredLines.Count < lines.Count) 
+        {
+            lines.RemoveRange(mirroredLines.Count - 1, lines.Count - mirroredLines.Count);
+        }
+        if (mirroredLines.Count > lines.Count)
+        {
+            mirroredLines.RemoveRange(lines.Count - 1, mirroredLines.Count - lines.Count);
+        }
+
+        return lines.SequenceEqual(secondLines);
     }
 }
