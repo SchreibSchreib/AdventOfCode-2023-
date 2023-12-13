@@ -10,7 +10,7 @@ namespace Day12
     {
         private readonly string _filePath;
 
-        public Dictionary<string,int[]> Get { get; }
+        public List<Tuple<string, int[]>> Get { get; }
 
         public Content()
         {
@@ -23,9 +23,9 @@ namespace Day12
             Directory.GetCurrentDirectory(),
             "Input.txt");
 
-        private Dictionary<string, int[]> LoadContent()
+        private List<Tuple<string, int[]>> LoadContent()
         {
-            Dictionary<string, int[]> content = new Dictionary<string, int[]>();
+            List<Tuple<string, int[]>> content = new List<Tuple<string, int[]>>();
 
             using (StreamReader reader = new StreamReader(_filePath))
             {
@@ -34,8 +34,8 @@ namespace Day12
                     string line = reader.ReadLine();
                     string splittedInputText = line.Split(" ")[0];
                     int[] splittedInputNumbers = line.Split(" ")[1].Split(',').Select(int.Parse).ToArray();
-
-                    content.Add(splittedInputText, splittedInputNumbers);
+                    Tuple<string,int[]> splittedInput = new Tuple<string,int[]>(splittedInputText, splittedInputNumbers);
+                    content.Add(splittedInput);
                 }
                 reader.Close();
 

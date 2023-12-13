@@ -2,6 +2,6 @@
 
 Content input = new Content();
 
-Dictionary<string, int[]> test = input.Get;
+List<int> result = new StringArranger(input).Count;
 
 Console.ReadLine();
