@@ -92,74 +92,32 @@ internal class MirrorCalculator
 
     private int GetVerticalResult(int indexOfMirror) => indexOfMirror + 1;
 
-    private int GetHorizontalResult() => FindMirrorLineIndex() * 100;
-
-    private int FindMirrorLineIndex()
+    private int GetHorizontalResult()
     {
-        int columnAdded = 0;
-        bool isTrueMirror = false;
-        List<string> lines = new List<string>();
+        string[] turnedInputBlock = TurnInputBlock(_inputBlock);
+        _inputBlock = turnedInputBlock;
+        IsVertical(out int indexOfMirror);
 
-        foreach (string column in _inputBlock)
-        {
-            if (lines.Count - 1 < 0)
-            {
-                columnAdded++;
-                lines.Add(column);
-                continue;
-            }
-            if (lines.Count == _inputBlock.Length)
-            {
-                continue;
-            }
-            if (lines[lines.Count - 1] == column)
-            {
-                if (CheckMirror(lines.Count, _inputBlock))
-                {
-                    return columnAdded;
-                }
-            }
-            columnAdded++;
-            lines.Add(column);
-        }
-        return 0;
+        return (indexOfMirror + 1) * 100;
     }
 
-    private bool CheckMirror(int count, string[] inputBlock)
+    private string[] TurnInputBlock(string[] inputBlock)
     {
-        List<string> lines = new List<string>();
-        List<string> secondLines = new List<string>();
-        List<string> mirroredLines = new List<string>();
 
-        for (int indexList = 0; indexList < count; indexList++)
+        string[] turnInputNinetyDegree = new string[inputBlock[0].Length];
+
+        for (int indexOnLine = 0; indexOnLine < turnInputNinetyDegree.Length; indexOnLine++)
         {
-            lines.Add(inputBlock[indexList]);
-        }
-        for (int indexList = count; indexList < count + indexList; indexList++)
-        {
-            if (indexList != inputBlock.Length)
+            StringBuilder convertInput = new StringBuilder();
+
+            foreach (string line in _inputBlock)
             {
-                secondLines.Add(inputBlock[indexList]);
+                convertInput.Append(line[indexOnLine]);
             }
-            else
-            {
-                break;
-            }
-        }
-        foreach (string line in secondLines)
-        {
-            mirroredLines.Insert(0, line);
+
+            turnInputNinetyDegree[indexOnLine] = convertInput.ToString();
         }
 
-        if (mirroredLines.Count < lines.Count) 
-        {
-            lines.RemoveRange(mirroredLines.Count - 1, lines.Count - mirroredLines.Count);
-        }
-        if (mirroredLines.Count > lines.Count)
-        {
-            mirroredLines.RemoveRange(lines.Count - 1, mirroredLines.Count - lines.Count);
-        }
-
-        return lines.SequenceEqual(secondLines);
+        return turnInputNinetyDegree;
     }
 }

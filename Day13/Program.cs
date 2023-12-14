@@ -1,9 +1,9 @@
 ﻿using Day13;
 
-Content input = new Content();
+Content inputBlock = new Content();
 int result = 0;
 
-foreach (string[] block in input.Get)
+foreach (string[] block in inputBlock.Get)
 {
     result += new MirrorCalculator(block).Result;
 } 
