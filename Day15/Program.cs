@@ -1,6 +1,6 @@
 ﻿using Day15;
 
-var input = new Content().Get;
+string[] input = new Content().Get;
 
 int endResult = 0;
 Dictionary<string, List<string>>
