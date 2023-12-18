@@ -9,3 +9,7 @@ foreach (string line in input)
     directionToNumber.Add(new Tuple<string, int>(line.Split(' ')[0], int.Parse(line.Split(' ')[1])));
 }
 
+int result = new VolumeCalculator(directionToNumber).Get;
+
+Console.ReadLine();
+

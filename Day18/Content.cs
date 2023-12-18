@@ -25,7 +25,7 @@ namespace Day18
 
         private string[] LoadContent()
         {
-            string[] result = new string[0];
+            List<string> result = new List<string>();
 
             using (StreamReader reader = new StreamReader(_filePath))
             {
@@ -33,11 +33,11 @@ namespace Day18
                 {
                     string nextLine = reader.ReadLine();
 
-                        result = nextLine.Split(",");
+                    result.Add( nextLine );
                 }
                 reader.Close();
 
-                return result;
+                return result.ToArray();
             }
         }
     }
