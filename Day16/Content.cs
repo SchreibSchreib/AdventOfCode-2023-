@@ -29,13 +29,14 @@ namespace Day16
 
             using (StreamReader reader = new StreamReader(_filePath))
             {
+                List<string> lines = new List<string>();
                 while (!reader.EndOfStream)
                 {
-                    string file = reader.ReadToEnd();
-
-                    fileContent = file.Split("\n");
+                    string line = reader.ReadLine();
+                    lines.Add(line);
                 }
-                reader.Close();
+
+                fileContent = lines.ToArray();
             }
 
             char[,] content = new char[fileContent.Length, fileContent[0].Length];

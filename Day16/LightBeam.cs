@@ -73,7 +73,7 @@ namespace Day16
         {
             try
             {
-                gameField[CurrentPosition[0], CurrentPosition[1]].PowerField();
+               gameField[CurrentPosition[0], CurrentPosition[1]].PowerField();
                return gameField[CurrentPosition[0], CurrentPosition[1]].PossibleDirections[Direction];
             }
             catch
