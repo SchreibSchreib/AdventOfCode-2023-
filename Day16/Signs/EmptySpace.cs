@@ -11,14 +11,14 @@ namespace Day16.Signs
     {
 
 
-        protected override Dictionary<char, string> GetDirections()
+        protected override Dictionary<string, string> GetDirections()
         {
-            return new Dictionary<char, string>
+            return new Dictionary<string, string>
             {
-                { '>', ">" },
-                { '^', "^" },
-                { 'v', "v" },
-                { '<', "<" }
+                { ">", ">" },
+                { "^", "^" },
+                { "v", "v" },
+                { "<", "<" }
             };
         }
     }

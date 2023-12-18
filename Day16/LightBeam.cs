@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Day16.AbstractClasses;
+using Day16.Signs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,57 +11,76 @@ namespace Day16
     internal class LightBeam
     {
         public int[] CurrentPosition { get; }
-        public char Direction { get; } = '>'; 
+        public string Direction { get; set; } 
         public bool HittedWall = false;
 
-        public LightBeam(int[] positionOfBeam)
+        public LightBeam(int[] positionOfBeam, string direction)
         {
             CurrentPosition = positionOfBeam;
+            Direction = direction;
         }
 
-        internal void Move()
+        internal void Move(FieldSign[,] gameField)
         {
-            if (Direction == '>')
+            if (Direction == ">")
             {
-                MoveRight();
+                MoveRight(gameField);
                 return;
             }
-            if (Direction == 'v')
+            if (Direction == "v")
             {
-                MoveDown();
+                MoveDown(gameField);
                 return;
             }
-            if (Direction == '<')
+            if (Direction == "<")
             {
-                MoveLeft();
+                MoveLeft(gameField);
                 return;
             }
-            if (Direction == '^') 
+            if (Direction == "^") 
             {
-                MoveUp();
+                MoveUp(gameField);
                 return;
             }
 
         }
 
-        private void MoveUp()
+        private void MoveUp(FieldSign[,] gameField)
         {
             CurrentPosition[0] = CurrentPosition[0] - 1;
+            Direction = GetNextDirection(gameField);
         }
 
-        private void MoveLeft()
+        private void MoveLeft(FieldSign[,] gameField)
         {
             CurrentPosition[1] = CurrentPosition[1] - 1;
+            Direction = GetNextDirection(gameField);
         }
 
-        private void MoveDown()
+        private void MoveDown(FieldSign[,] gameField)
         {
             CurrentPosition[0] = CurrentPosition[0] + 1;
+            Direction = GetNextDirection(gameField);
         }
 
-        private void MoveRight()
+        private void MoveRight(FieldSign[,] gameField)
         {
             CurrentPosition[1] = CurrentPosition[1] + 1;
+            Direction = GetNextDirection(gameField);
+        }
+
+        private string GetNextDirection(FieldSign[,] gameField)
+        {
+            try
+            {
+                gameField[CurrentPosition[0], CurrentPosition[1]].PowerField();
+               return gameField[CurrentPosition[0], CurrentPosition[1]].PossibleDirections[Direction];
+            }
+            catch
+            {
+                HittedWall = true;
+                return Direction;
+            }
         }
     }
 }

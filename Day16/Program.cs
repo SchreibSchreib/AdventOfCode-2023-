@@ -10,8 +10,10 @@ int[] startPosition = new int[]
     0,0
 };
 
-LightBeam initialBeam = new LightBeam(startPosition);
+LightBeam initialBeam = new LightBeam(startPosition, "v");
 
 int result = new BeamEvaluator(initialBeam, gameField).Get;
+
+Console.ReadLine();
 
 

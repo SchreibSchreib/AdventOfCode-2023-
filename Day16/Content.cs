@@ -33,7 +33,7 @@ namespace Day16
                 {
                     string file = reader.ReadToEnd();
 
-                    fileContent = file.Split("/n");
+                    fileContent = file.Split("\n");
                 }
                 reader.Close();
             }
@@ -42,7 +42,7 @@ namespace Day16
 
             for (int yIndex = 0; yIndex < fileContent.Length; yIndex++)
             {
-                for (int xIndex = 0; xIndex < fileContent[0].Length; xIndex++)
+                for (int xIndex = 0; xIndex < fileContent[yIndex].Length; xIndex++)
                 {
                     content[yIndex,xIndex] = (char)fileContent[yIndex][xIndex];
                 }

@@ -8,14 +8,20 @@ namespace Day16.AbstractClasses
 {
     abstract class FieldSign
     {
-        protected Dictionary<char, string>? _possibleDirections;
-        public bool IsPowered { get; } = false;
+        public bool IsPowered { get; private set; } = false;
+
+        public Dictionary<string, string>? PossibleDirections;
 
         public FieldSign()
         {
-            _possibleDirections = GetDirections();
+            PossibleDirections = GetDirections();
         }
 
-        protected abstract Dictionary<char, string>? GetDirections();
+        public void PowerField()
+        {
+            IsPowered = true;
+        }
+
+        protected abstract Dictionary<string, string>? GetDirections();
     }
 }
