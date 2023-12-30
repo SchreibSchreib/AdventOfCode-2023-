@@ -2,7 +2,7 @@
 {
     internal class BrickMapper
     {
-        List<Brick> GetSortedBricks { get; }
+        public List<Brick> GetSortedBricks { get; }
 
         public BrickMapper(List<Brick> allFlyingBricks)
         {
@@ -14,10 +14,9 @@
             List<Brick> result = Sort(allFlyingBricks);
             FindAndInsertCavities(result);
             result = FillCavitiesWithFallingBricks(result);
+            result = FindPositionsForBricksToLand(result);
             return result;
         }
-
-
 
         private List<Brick> Sort(List<Brick> allFlyingBricks) => allFlyingBricks
             .OrderBy(x => x.CoordinatesZ[1])
@@ -52,13 +51,10 @@
                 if (bricklistWithCavities[index].CoordinatesZ != null) continue;
                 indexBrickBeforeCavity = index - 1;
                 indexBrickAfterCavity = GetNextBrick(index, bricklistWithCavities);
-                gap = indexBrickAfterCavity - indexBrickBeforeCavity;
-                if (LandsOnBrickBeforeCavity(bricklistWithCavities[indexBrickBeforeCavity],
-                    bricklistWithCavities[indexBrickAfterCavity]))
-                {
-                    bricklistWithCavities.Insert(index, bricklistWithCavities[indexBrickAfterCavity]);
-                    bricklistWithCavities.RemoveRange(indexBrickBeforeCavity + 2, gap);
-                }
+                gap = indexBrickAfterCavity - indexBrickBeforeCavity - 1;
+                bricklistWithCavities[indexBrickAfterCavity].ChangeZCoordsAfterFall(gap);
+                bricklistWithCavities.Insert(index, bricklistWithCavities[indexBrickAfterCavity]);
+                bricklistWithCavities.RemoveRange(indexBrickBeforeCavity + 2, gap + 1);
             }
             return bricklistWithCavities;
         }
@@ -74,7 +70,37 @@
             return index;
         }
 
-        private bool LandsOnBrickBeforeCavity(Brick brick1, Brick brick2)
+
+        private List<Brick> FindPositionsForBricksToLand(List<Brick> result)
+        {
+            result.RemoveAt(0);
+            for (int indexList = 1; indexList < result.Count - 1; indexList++)
+            {
+                if (LandsOnBrick(result[indexList], result[indexList + 1]))
+                {
+                    continue;
+                }
+                result = FindLandingSpot(indexList - 1, result, result[indexList + 1]);
+            }
+            return result.OrderBy(x => x.CoordinatesZ[1]).ToList();
+        }
+
+        private List<Brick> FindLandingSpot(int indexList, List<Brick> result, Brick fallingBrick)
+        {
+            int gap = -1;
+            for (; indexList > 1; indexList--)
+            {
+                if (LandsOnBrick(result[indexList], fallingBrick))
+                {
+                    fallingBrick.CoordinatesZ[0] += gap;
+                    fallingBrick.CoordinatesZ[1] += gap;
+                }
+                gap--;
+            }
+            return result;
+        }
+
+        private bool LandsOnBrick(Brick brick1, Brick brick2)
         {
             bool overLapX = false;
             bool overLapY = false;
@@ -95,6 +121,7 @@
                     if (yCoordBrick1 == yCoordBrick2) overLapY = true;
                 }
             }
+
             return overLapX && overLapY;
         }
     }

@@ -8,9 +8,10 @@ namespace Day22
 {
     internal class Brick
     {
+        public bool HasBrickOnIt { get; set; } = false;
         public int[]? CoordinatesX { get; }
         public int[]? CoordinatesY { get; }
-        public int[]? CoordinatesZ { get; }
+        public int[]? CoordinatesZ { get; private set; }
         private string[] _brickSymbolForDirection;
 
 
@@ -34,5 +35,11 @@ namespace Day22
             (brickInformation.Split("~")[1].Split(",")[indexNumber]);
 
         private int[] GetCoordinates(int startPoint, int endPoint) => new int[] { startPoint, endPoint };
+
+        public void ChangeZCoordsAfterFall(int gap)
+        {
+            CoordinatesZ[0] -= gap;
+            CoordinatesZ[1] -= gap;
+        }
     }
 }

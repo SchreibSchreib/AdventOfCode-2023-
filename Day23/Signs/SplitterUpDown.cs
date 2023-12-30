@@ -1,22 +1,26 @@
-﻿using Day16.AbstractClasses;
+﻿using Day23.AbstractClasses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Day16.Signs
+namespace Day23.Signs
 {
-    internal class EmptySpace : FieldSign
+    internal class SplitterUpDown : FieldSign
     {
+        public SplitterUpDown(int yCoords, int xCoords) : base(yCoords, xCoords)
+        {
+        }
+
         protected override Dictionary<string, string> GetDirections()
         {
             return new Dictionary<string, string>
             {
-                { ">", ">" },
+                { ">", "^,v" },
                 { "^", "^" },
                 { "v", "v" },
-                { "<", "<" }
+                { "<", "^,v" }
             };
         }
     }
