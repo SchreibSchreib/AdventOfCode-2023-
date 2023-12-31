@@ -37,13 +37,13 @@ internal class GameFieldConverter
         switch (currentChar)
         {
             case '>':
-                return new MirrorDownLeftOrUpRight(row,col);
+                return new SlopeRight(row,col);
             case 'v':
-                return new MirrorLeftUpOrDownRight(row, col);
+                return new SlopeDown(row, col);
             case '^':
-                return new SplitterLeftRight(row, col);
+                return new SlopeUp(row, col);
             case '<':
-                return new SplitterUpDown(row, col);
+                return new SlopeLeft(row, col);
             case '.':
                 return new EmptySpace(row, col);
             default:

@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace Day23.Signs
 {
-    internal class EmptySpace : FieldSign
+    internal class SlopeUp : FieldSign
     {
-        public EmptySpace(int yCoords, int xCoords) : base(yCoords, xCoords)
+        public SlopeUp(int yCoords, int xCoords) : base(yCoords, xCoords)
         {
+            DirectionY = 1;
+            DirectionX = 0;
         }
     }
 }

@@ -12,11 +12,11 @@ namespace Day23.AbstractClasses
         public int[,] Coordinates { get; }
         public int StepsToWalkHere { get; private set; }
 
-        public Dictionary<string, string>? PossibleDirections;
+        public int DirectionY { get; protected set; }
+        public int DirectionX { get; protected set; }
 
         public FieldSign(int yCoords, int xCoords)
         {
-            PossibleDirections = GetDirections();
             Coordinates = new int[,]
                 {
                     { yCoords, xCoords }
@@ -26,9 +26,10 @@ namespace Day23.AbstractClasses
         public void SteppedOn(Person currentRoute)
         {
             IsStepped = true;
-            StepsToWalkHere = currentRoute.CurrentWalkedSteps;
         }
-
-        protected abstract Dictionary<string, string>? GetDirections();
+        public void CalculateSteps(Person currentRoute)
+        {
+            StepsToWalkHere = currentRoute.CurrentWalkedSteps + 1;
+        }
     }
 }

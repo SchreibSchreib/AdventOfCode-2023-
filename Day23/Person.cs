@@ -25,12 +25,14 @@ namespace Day23
         internal void Move(FieldSign nextField)
         {
             CurrentWalkedSteps++;
+            nextField.CalculateSteps(this);
 
-            if (nextField.StepsToWalkHere >= CurrentWalkedSteps && !nextField.IsStepped)
+            if (nextField.StepsToWalkHere >= CurrentWalkedSteps && nextField.IsStepped)
             {
                 CrossedBetterOrEqualWay = true;
             }
 
+            nextField.SteppedOn(this);
             CurrentPosition = nextField.Coordinates;
         }
 

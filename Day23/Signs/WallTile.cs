@@ -12,16 +12,5 @@ namespace Day23.Signs
         public WallTile(int yCoords, int xCoords) : base(yCoords, xCoords)
         {
         }
-
-        protected override Dictionary<string, string> GetDirections()
-        {
-            return new Dictionary<string, string>
-            {
-                { ">", ">" },
-                { "^", "^" },
-                { "v", "v" },
-                { "<", "<" }
-            };
-        }
     }
 }

@@ -22,18 +22,24 @@ internal class RouteCalculator
 
     private int EvaluateSteps(List<Person> possibleRoutesList, FieldSign[,] gameField)
     {
-        foreach (var possibleRoute in possibleRoutesList)
+        for (int listNumber = 0; listNumber < possibleRoutesList.Count; listNumber++)
         {
+            var possibleRoute = possibleRoutesList[listNumber]; 
             while (!possibleRoute.ReachedEnd || !possibleRoute.CrossedBetterOrEqualWay)
             {
                 FieldSign[] possibleMoves = GetNextFields(possibleRoute.CurrentPosition, gameField);
+
+                if (possibleMoves.Length < 1)
+                {
+                    possibleRoute.HasReachedEnd();
+                    break;
+                }
 
                 for (int possibleMove = 1; possibleMove != possibleMoves.Length; possibleMove++)
                 {
                     AddRoute(possibleRoute);
                 }
 
-                possibleMoves[0].SteppedOn(possibleRoute);
                 possibleRoute.Move(possibleMoves[0]);
             }
         }
@@ -48,23 +54,41 @@ internal class RouteCalculator
 
         List<FieldSign> nextFields = new List<FieldSign>();
 
-        if (x - 1 >= 0 && gameField[y, x - 1].GetType() == typeof(EmptySpace) && !gameField[y, x - 1].IsStepped)
+        if (x - 1 >= 0 && IsAccessible(y, x, gameField[y, x - 1]))
             nextFields.Add(gameField[y, x - 1]);
 
-        if (x + 1 < gameField.GetLength(1) && gameField[y, x + 1].GetType() == typeof(EmptySpace) && !gameField[y, x + 1].IsStepped)
+        if (x + 1 < gameField.GetLength(1) && IsAccessible(y, x, gameField[y, x + 1]))
             nextFields.Add(gameField[y, x + 1]);
 
-        if (y - 1 >= 0 && gameField[y - 1, x].GetType() == typeof(EmptySpace) && !gameField[y - 1, x].IsStepped)
+        if (y - 1 >= 0 && IsAccessible(y, x, gameField[y - 1, x]))
             nextFields.Add(gameField[y - 1, x]);
 
-        if (y + 1 < gameField.GetLength(0) && gameField[y + 1, x].GetType() == typeof(EmptySpace) && !gameField[y + 1, x].IsStepped)
+        if (y + 1 < gameField.GetLength(0) && IsAccessible(y, x, gameField[y + 1, x]))
             nextFields.Add(gameField[y + 1, x]);
 
         return nextFields.ToArray();
     }
 
+    private bool IsAccessible(int y, int x, FieldSign signToStepOn)
+    {
+        if (signToStepOn.GetType() == typeof(WallTile))
+            return false;
+
+        if (signToStepOn.IsStepped)
+            return false;
+
+        if (signToStepOn.GetType() == typeof(EmptySpace))
+            return true;
+
+
+        int yOfTile = signToStepOn.Coordinates[0, 0];
+        int xOfTile = signToStepOn.Coordinates[0, 1];
+
+        return yOfTile - signToStepOn.DirectionY != y || xOfTile + signToStepOn.DirectionX != x;
+    }
+
     public void AddRoute(Person currentRoute)
     {
-        _routesList.Insert(_routesList.Count - 1, new Person(currentRoute.CurrentPosition, currentRoute.CurrentWalkedSteps));
+        _routesList.Add(new Person(currentRoute.CurrentPosition, currentRoute.CurrentWalkedSteps));
     }
 }
