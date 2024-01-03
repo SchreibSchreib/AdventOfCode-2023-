@@ -12,9 +12,9 @@ namespace Day23
     {
         public int[,] CurrentPosition { get; private set; }
         public int CurrentWalkedSteps { get; private set; }
-
+        public int MaxSteps { get; private set; }
         public bool ReachedEnd { get; private set; } = false;
-        public bool CrossedBetterOrEqualWay { get; private set; } = false;
+        public bool CrossedWorseWay { get; private set; } = false;
 
         public Person(int[,] positionOfPerson, int currentWalkedSteps)
         {
@@ -24,18 +24,25 @@ namespace Day23
 
         internal void Move(FieldSign nextField)
         {
-            CurrentWalkedSteps++;
-            nextField.CalculateSteps(this);
-
-            if (nextField.StepsToWalkHere >= CurrentWalkedSteps && nextField.IsStepped)
+            if (nextField.StepsToWalkHere < CurrentWalkedSteps + 1 && nextField.IsStepped)
             {
-                CrossedBetterOrEqualWay = true;
+                CrossedWorseWay = true;
+                MaxSteps = CalculateMaxStepsUsingOtherRoute(nextField);
             }
 
+            CurrentWalkedSteps++;
+            nextField.CalculateSteps(this);
             nextField.SteppedOn(this);
             CurrentPosition = nextField.Coordinates;
         }
 
-        public void HasReachedEnd() => ReachedEnd = true;
+        private int CalculateMaxStepsUsingOtherRoute(FieldSign nextField)
+        {
+            return (CurrentWalkedSteps + 1 - nextField.StepsToWalkHere) + nextField.PersonWhoSteppedOnThisField.MaxSteps;
+        }
+
+        public void CalculateMaxSteps(int maxSteps) => MaxSteps = maxSteps;
+
+        public void EndReached() => ReachedEnd = true;
     }
 }

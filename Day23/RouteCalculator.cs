@@ -24,14 +24,15 @@ internal class RouteCalculator
     {
         for (int listNumber = 0; listNumber < possibleRoutesList.Count; listNumber++)
         {
-            var possibleRoute = possibleRoutesList[listNumber]; 
-            while (!possibleRoute.ReachedEnd || !possibleRoute.CrossedBetterOrEqualWay)
+            var possibleRoute = possibleRoutesList[listNumber];
+            while (!possibleRoute.CrossedWorseWay)
             {
                 FieldSign[] possibleMoves = GetNextFields(possibleRoute.CurrentPosition, gameField);
 
                 if (possibleMoves.Length < 1)
                 {
-                    possibleRoute.HasReachedEnd();
+                    possibleRoute.CalculateMaxSteps(possibleRoute.CurrentWalkedSteps);
+                    possibleRoute.EndReached();
                     break;
                 }
 
@@ -40,6 +41,7 @@ internal class RouteCalculator
                     AddRoute(possibleRoute);
                 }
 
+                possibleMoves[0].Symbol = "O";
                 possibleRoute.Move(possibleMoves[0]);
             }
         }
