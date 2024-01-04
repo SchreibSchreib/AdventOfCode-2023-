@@ -14,7 +14,7 @@ namespace Day23
         public int CurrentWalkedSteps { get; private set; }
         public int MaxSteps { get; private set; }
         public bool ReachedEnd { get; private set; } = false;
-        public bool CrossedWorseWay { get; private set; } = false;
+        public bool CrossedOtherWay { get; private set; } = false;
 
         public Person(int[,] positionOfPerson, int currentWalkedSteps)
         {
@@ -24,9 +24,15 @@ namespace Day23
 
         internal void Move(FieldSign nextField)
         {
+            if (nextField.StepsToWalkHere >= CurrentWalkedSteps + 1 && nextField.IsStepped)
+            {
+                CrossedOtherWay = true;
+                return;
+            }
+
             if (nextField.StepsToWalkHere < CurrentWalkedSteps + 1 && nextField.IsStepped)
             {
-                CrossedWorseWay = true;
+                CrossedOtherWay = true;
                 MaxSteps = CalculateMaxStepsUsingOtherRoute(nextField);
             }
 
