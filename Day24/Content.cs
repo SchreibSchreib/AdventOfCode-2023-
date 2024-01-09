@@ -45,16 +45,23 @@ namespace Day24
             var splitToStartAndMove = line.Split("@");
             var listStartPoints = GenerateListStartPoints(splitToStartAndMove);
             var listVelocity = GenerateVelocityList(splitToStartAndMove);
+
+            return new HailStone(listStartPoints[0],
+                listStartPoints[1],
+                listStartPoints[2],
+                listVelocity[0],
+                listVelocity[1],
+                listVelocity[2]);
         }
 
         private List<int> GenerateVelocityList(string[] splitToStartAndMove)
         {
             var velocityList = new List<int>();
-            var velocityData = splitToStartAndMove[0].Split(",");
+            var velocityData = splitToStartAndMove[1].Split(",");
 
             foreach (var point in velocityData)
             {
-                velocityList.Add(long.Parse(point));
+                velocityList.Add(int.Parse(point));
             }
 
             return velocityList;
