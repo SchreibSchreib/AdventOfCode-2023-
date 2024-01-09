@@ -8,7 +8,7 @@ namespace Day24
 {
     internal class Intersection
     {
-        public decimal Get { get; }
+        public decimal[] Get { get; }
 
         public Intersection(HailStone firstHailStone, HailStone secondHailstone)
         {
@@ -17,7 +17,8 @@ namespace Day24
 
         private decimal GetIntersection2D(HailStone firstHailStone, HailStone secondHailstone)
         {
-            
+            Trajectory firstTrajectory = firstHailStone.Trajectory;
+            Trajectory secondTrajectory = secondHailstone.Trajectory;
         }
     }
 }

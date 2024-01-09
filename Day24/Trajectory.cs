@@ -2,16 +2,21 @@
 {
     public class Trajectory
     {
+        public Decimal Increase { get; }
+        public Decimal AxisSection { get; }
+
         private readonly Func<decimal, decimal> _lineEquatation;
 
         public Trajectory(decimal increase, decimal axisSection)
         {
-            _lineEquatation = x => increase * x + axisSection;
+            Increase = increase;
+            AxisSection = axisSection;
+            _lineEquatation = x => Increase * x + AxisSection;
         }
 
-        public decimal CalculateTrajectory(decimal x)
+        public decimal CalculateTrajectory(decimal y)
         {
-            return _lineEquatation(x);
+            return _lineEquatation(y);
         }
     }
 }
