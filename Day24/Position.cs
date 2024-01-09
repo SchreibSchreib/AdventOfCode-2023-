@@ -2,8 +2,8 @@
 {
     internal class Position
     {
-        public long[] Get2D { get; }
-        public long[] Get3D { get; }
+        public decimal[] Get2D { get; }
+        public decimal[] Get3D { get; }
 
         public Position(long xCoords, long yCoords, long zCoords)
         {
@@ -11,8 +11,8 @@
             Get3D = Get3DPosition(xCoords, yCoords, zCoords);
         }
 
-        private long[] Get3DPosition(long xCoords, long yCoords, long zCoords) => new long[] { xCoords, yCoords, zCoords };
+        private decimal[] Get3DPosition(long xCoords, long yCoords, long zCoords) => new decimal[] { xCoords, yCoords, zCoords };
 
-        private long[] Get2DPosition(long xCoords, long yCoords) => new long[] { xCoords, yCoords };
+        private decimal[] Get2DPosition(long xCoords, long yCoords) => new decimal[] { xCoords, yCoords };
     }
 }

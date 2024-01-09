@@ -8,17 +8,31 @@ namespace Day24
 {
     internal class Intersection
     {
-        public decimal[] Get { get; }
+        public decimal GetX { get; private set; }
+        public decimal GetY { get; private set; }
 
         public Intersection(HailStone firstHailStone, HailStone secondHailstone)
         {
-            Get = GetIntersection2D(firstHailStone, secondHailstone);
+            GetIntersection2D(firstHailStone, secondHailstone);
         }
 
-        private decimal GetIntersection2D(HailStone firstHailStone, HailStone secondHailstone)
+        private void GetIntersection2D(HailStone firstHailStone, HailStone secondHailStone)
         {
-            Trajectory firstTrajectory = firstHailStone.Trajectory;
-            Trajectory secondTrajectory = secondHailstone.Trajectory;
+            decimal increaseFirstTrajectory = firstHailStone.Trajectory.Increase;
+            decimal axisSectionFirstTrajectory = firstHailStone.Trajectory.AxisSection;
+            decimal increaseSecondTrajectory = secondHailStone.Trajectory.Increase;
+            decimal axisSectionSecondtTrajectory = secondHailStone.Trajectory.AxisSection;
+
+            if (increaseFirstTrajectory != increaseSecondTrajectory)
+            {
+                GetX = (axisSectionSecondtTrajectory - axisSectionFirstTrajectory) / (increaseFirstTrajectory - increaseSecondTrajectory);
+                GetY = firstHailStone.Trajectory.CalculateTrajectory(GetX);
+            }
+            else
+            {
+                GetX = 0;
+                GetY = 0;
+            }
         }
     }
 }
