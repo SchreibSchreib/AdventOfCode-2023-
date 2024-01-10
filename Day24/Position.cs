@@ -1,6 +1,6 @@
 ﻿namespace Day24
 {
-    internal class Position
+    public class Position
     {
         public decimal[] Get2D { get; }
         public decimal[] Get3D { get; }

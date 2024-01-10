@@ -1,16 +1,24 @@
 ﻿using Day24;
 
 var input = new Content().Get;
+int result = 0;
 
-foreach (var hailStone in input)
+for (int startFrom = 0; startFrom < input.Count; startFrom++)
 {
-    foreach(var hailStoneForMath in input)
+    for (int calculateWith = startFrom; calculateWith < input.Count; calculateWith++)
     {
-        if (hailStoneForMath ==  hailStone)
-        continue;
+        if (startFrom == calculateWith)
+            continue;
 
-        var testResult = new Intersection(hailStone, hailStoneForMath);
-        Console.WriteLine($"X: {testResult.GetX} Y: {testResult.GetY}");
+        var intersection = new Intersection(input[startFrom], input[calculateWith]);
+
+        if (!intersection.IsInsideArea || intersection.CrossedInPast)
+            continue;
+
+        result++;
     }
 }
+
+
+
 Console.ReadLine();

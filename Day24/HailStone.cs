@@ -5,15 +5,14 @@ namespace Day24
     public class HailStone
     {
         public Trajectory Trajectory { get; }
-
-        private Position _startPosition;
-        private Position _positionAfterTick;
+        public Position StartPosition { get; }
+        public Position PositionAfterTick { get; }
 
 
         public HailStone(long startX, long startY, long startZ, int tickX, int tickY, int tickZ)
         {
-            _startPosition = new Position(startX, startY, startZ);
-            _positionAfterTick = new Position(startX + tickX, startY + tickY, startZ + tickZ);
+            StartPosition = new Position(startX, startY, startZ);
+            PositionAfterTick = new Position(startX + tickX, startY + tickY, startZ + tickZ);
             Trajectory = GetTrajectory();
         }
 
@@ -24,11 +23,11 @@ namespace Day24
             return new Trajectory(increase, axisSection);
         }
 
-        private decimal GetAxisSection(decimal increase) => _startPosition.Get2D[1] - (increase * _startPosition.Get2D[0]);
+        private decimal GetAxisSection(decimal increase) => StartPosition.Get2D[1] - (increase * StartPosition.Get2D[0]);
 
         private decimal GetIncrease()
         {
-            return (_positionAfterTick.Get2D[1] - _startPosition.Get2D[1]) / (_positionAfterTick.Get2D[0] - _startPosition.Get2D[0]);
+            return (PositionAfterTick.Get2D[1] - StartPosition.Get2D[1]) / (PositionAfterTick.Get2D[0] - StartPosition.Get2D[0]);
         }
     }
 }
