@@ -1,33 +1,58 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Day3
 {
     internal class NumberIndexer
     {
-        public Tuple<int, Dictionary<int, int>> Get { get; }
+        public List<Tuple<int, int, int, int>> Get { get; }
 
-        public NumberIndexer(string line, int indexOfLine)
+        public NumberIndexer(string[] input)
         {
-            Get = LoadDictionary(line, indexOfLine);
+            Get = FindIndexes(input);
         }
 
-        private Tuple<int, Dictionary<int, int>> LoadDictionary(string line, int indexOfLine) => new Tuple<int, Dictionary<int, int>>
-            (indexOfLine,
-            GetIndizes(line));
-
-        private Dictionary<int, int> GetIndizes(string line)
+        private List<Tuple<int, int, int, int>> FindIndexes(string[] input)
         {
-            MatchCollection matches = Regex.Matches(line, @"\d+");
+            var indexList = new List<Tuple<int, int, int, int>>();
 
-            Dictionary<int, int> result = matches
-            .Cast<Match>()
-            .Select(match => new { Index = match.Index, Value = int.Parse(match.Value) })
-            .ToDictionary(item => item.Index, item => item.Value);
+            for (int yIndex = 0; yIndex < input.Length; yIndex++)
+            {
+                for (int xIndex = 0; xIndex < input[yIndex].Length; xIndex++)
+                {
+                    if (!Char.IsDigit(input[yIndex][xIndex]))
+                        continue;
+
+                    var newTuple = GetTuple(input[yIndex], yIndex, ref xIndex);
+                    indexList.Add(newTuple);
+                }
+            }
+
+            return indexList;
+        }
+
+        private Tuple<int, int, int, int> GetTuple(string textLine, int yIndex, ref int xIndex)
+        {
+            var completeValue = "";
+
+            for (; xIndex < textLine.Length; xIndex++)
+            {
+                if (!Char.IsDigit(textLine[xIndex]))
+                    break;
+
+                completeValue += textLine[xIndex];
+            }
+
+            var result = new Tuple<int, int, int, int>(
+                int.Parse(completeValue),
+                yIndex,
+                xIndex - completeValue.Length,
+                xIndex - 1);
 
             return result;
         }
